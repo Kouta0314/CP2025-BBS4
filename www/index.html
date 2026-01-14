@@ -153,6 +153,18 @@ function formatTimestamp(timestamp) {
         minute: '2-digit'
     });
 }
+function timeAgo(timestamp){
+    const now = Date.now();
+    const diffMs = now - timestamp;
+
+    const diffMin = Math.floor(diffMs / (1000 * 60));
+
+    if(diffMin < 1){
+        return 'たった今';
+    } 
+}
+
+
 
 // 投稿の編集権限チェック
 function canEditPost(post) {
@@ -199,6 +211,10 @@ function createPostElement(post) {
                 <span class="post-time">
                     ${formatTimestamp(post.timestamp)}
                 </span>
+                <span class="post-ago">
+                    (${timeAgo(post.timestamp)})
+                </span>
+            </div>
                 ${post.updatedAt ? `
                     <span class="post-updated">
                         (編集済み: ${formatTimestamp(post.updatedAt)})
